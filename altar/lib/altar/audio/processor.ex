@@ -67,11 +67,15 @@ defmodule Altar.Audio.Processor do
     case Altar.Translation.Service.translate(mock_transcript, "en", state.target_language) do
       {:ok, translated} ->
         # Send update to parent LiveView
-        send(state.parent_pid, {:translation_update, %{
-          original: mock_transcript,
-          translated: translated,
-          timestamp: System.system_time(:second)
-        }})
+        send(
+          state.parent_pid,
+          {:translation_update,
+           %{
+             original: mock_transcript,
+             translated: translated,
+             timestamp: System.system_time(:second)
+           }}
+        )
 
       {:error, reason} ->
         Logger.error("Translation error: #{reason}")

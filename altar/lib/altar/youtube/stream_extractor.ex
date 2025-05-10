@@ -12,6 +12,7 @@ defmodule Altar.YouTube.StreamExtractor do
     case get_stream_info(youtube_url) do
       {:ok, stream_info} ->
         {:ok, stream_info.audio_url}
+
       {:error, reason} ->
         {:error, reason}
     end
@@ -22,11 +23,12 @@ defmodule Altar.YouTube.StreamExtractor do
     # For production, consider using a library or API
 
     case System.cmd("yt-dlp", [
-      "-g",
-      "-f", "bestaudio/best",
-      "--no-playlist",
-      youtube_url
-    ]) do
+           "-g",
+           "-f",
+           "bestaudio/best",
+           "--no-playlist",
+           youtube_url
+         ]) do
       {output, 0} ->
         audio_url = String.trim(output)
         {:ok, %{audio_url: audio_url}}
