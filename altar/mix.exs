@@ -64,7 +64,8 @@ defmodule Altar.MixProject do
       {:httpoison, "~> 2.2"},
 
       # Google authentication library for OAuth2 tokens
-      {:goth, "~> 1.3"}
+      {:goth, "~> 1.3"},
+      {:tidewave, "~> 0.1", only: :dev}
     ]
   end
 
