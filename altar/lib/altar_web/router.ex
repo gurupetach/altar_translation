@@ -17,7 +17,7 @@ defmodule AltarWeb.Router do
   scope "/", AltarWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    live "/", TranslatorLive.Index, :index
   end
 
   # Other scopes may use custom stacks.
