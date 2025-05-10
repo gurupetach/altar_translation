@@ -1,3 +1,4 @@
+# mix.exs
 defmodule Altar.MixProject do
   use Mix.Project
 
@@ -57,7 +58,13 @@ defmodule Altar.MixProject do
       {:gettext, "~> 0.26"},
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.1.1"},
-      {:bandit, "~> 1.5"}
+      {:bandit, "~> 1.5"},
+
+      # HTTP client for making API calls to Google services
+      {:httpoison, "~> 2.2"},
+
+      # Google authentication library for OAuth2 tokens
+      {:goth, "~> 1.3"}
     ]
   end
 

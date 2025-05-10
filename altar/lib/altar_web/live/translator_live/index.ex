@@ -33,14 +33,13 @@ defmodule AltarWeb.TranslatorLive.Index do
   @impl true
   def handle_event("start_translation", _params, socket) do
     case UrlValidator.validate_url(socket.assigns.youtube_url) do
-      {:ok, video_id} ->
+      {:ok, _video_id} ->
         # Start the audio processor without checking if it's live
-        {:ok, pid} =
-          Processor.start_link(%{
-            stream_url: socket.assigns.youtube_url,
-            target_language: socket.assigns.target_language,
-            parent_pid: self()
-          })
+        {:ok, pid} = Processor.start_link(%{
+          stream_url: socket.assigns.youtube_url,
+          target_language: socket.assigns.target_language,
+          parent_pid: self()
+        })
 
         Processor.start_processing(pid)
 
@@ -113,7 +112,7 @@ defmodule AltarWeb.TranslatorLive.Index do
             >
               <%= for {code, name} <- @languages, code != "en" do %>
                 <option value={code} selected={code == @target_language}>
-                  {name}
+                  <%= name %>
                 </option>
               <% end %>
             </select>
@@ -121,7 +120,7 @@ defmodule AltarWeb.TranslatorLive.Index do
 
           <%= if @error do %>
             <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
-              {@error}
+              <%= @error %>
             </div>
           <% end %>
 
@@ -162,13 +161,13 @@ defmodule AltarWeb.TranslatorLive.Index do
             <%= for transcript <- @transcripts do %>
               <div class="border-b pb-4">
                 <div class="text-sm text-gray-600">
-                  {DateTime.from_unix!(transcript.timestamp) |> Calendar.strftime("%H:%M:%S")}
+                  <%= DateTime.from_unix!(transcript.timestamp) |> Calendar.strftime("%H:%M:%S") %>
                 </div>
                 <div class="font-medium text-gray-900">
-                  Original: {transcript.original}
+                  Original: <%= transcript.original %>
                 </div>
                 <div class="text-blue-600">
-                  Translation: {transcript.translated}
+                  Translation: <%= transcript.translated %>
                 </div>
               </div>
             <% end %>
